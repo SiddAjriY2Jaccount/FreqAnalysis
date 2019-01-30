@@ -40,6 +40,8 @@ letterfreq1= {
 "Z":0.1/100
 }
 
+letterfreq1alphabet = list(letterfreq1.keys())
+
 
 #all letters of alphabet
 alphabet = list(string.ascii_uppercase)
@@ -123,6 +125,86 @@ def newfreqdist(ciphertext):
 
 letterfreq2 = newfreqdist(ciphertext)
 
+print("Given Frequency Analysis")
+print(letterfreq1)
+print()
+print("Generated Frequency Analysis in CipherText")
+print(letterfreq2)
+print()
+print(letterfreq1alphabet)
+
+#letterfreq2list = list(letterfreq2.values())
+#letterfreq2list = sorted(letterfreq2list, reverse=True)
+#print(letterfreq2list)
+
+###
+
+listletters1=list(letterfreq1.keys()) #list containing the alphabet letters in plaintext
+
+listcipher=list(letterfreq2.keys()) #list containing the alphabet letters in ciphertext
+
+#print(listfreq1,type(listfreq1))
+listfreq2=list(letterfreq2.values()) #list containing cipher letter frequencies
+
 print(letterfreq2)
 
-print(letterfreq1)
+print()
+print(listfreq2)
+
+sorted_list=sorted(listfreq2,reverse=True)
+
+print()
+
+print(sorted_list)
+
+guessed = {}
+
+for i in sorted_list:
+    count=0
+    for j in letterfreq2:
+        if(i == letterfreq2[j]):
+            guessed[listcipher[count]]=listletters1[sorted_list.index(i)]
+        count=count+1
+
+# test1=sorted(guessed.keys())
+# test2=sorted(guessed.values())
+# print(test1)
+# print()
+# print(test2)
+
+print()
+print("The possible substitutions are:\n",guessed)
+
+#print(len(guessed))
+
+guessed_list_values = list(guessed.values())
+#print(sorted(guessed_list_values))
+guessed_list_keys = list(guessed.keys())
+#print(sorted(guessed_list_keys))
+
+#finalsubstitution = {}
+
+#length_dict = len(guessed_list_values)
+#print(length_dict)
+#ii = jj = 0
+#while (length_dict != 0):
+#    finalsubstitution[guessed_list_values[ii]] = guessed_list_keys[jj]
+#    length_dict = length_dict-1
+#    ii+=1
+#    jj+=1
+
+print()
+
+#print(finalsubstitution)
+finalguessplaintext = ""
+for x in ciphertext:
+    if x in alphabet:
+        finalguessplaintext += guessed[x]
+    else:
+        finalguessplaintext += x
+
+print()
+print("Original Plaintext :")
+print(plaintext)
+print("The guessed plaintext from new frequency analysis is :\n")
+print(finalguessplaintext)
